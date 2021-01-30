@@ -18,8 +18,10 @@ Card.a = Card.withComponent('article')
 export default ({ location }) => {
   console.log(location); // inspect location for yourself
 
-  const {stream} = queryString.parse(location.search)
-  const iframeSource = `https://pus4-broadcast.officeapps.live.com/m/Broadcast.aspx?Fi=${stream}`
+  const {stream, server} = queryString.parse(location.search)
+  console.log(stream)
+  const iframeSource = `https://${server}.officeapps.live.com/m/Broadcast.aspx?Fi=${stream.replace(/\./g, '%2E')}`
+  console.log(iframeSource)
   return (
     <iframe
     frameBorder="0"
