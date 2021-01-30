@@ -29,6 +29,7 @@ module.exports = {
       }
     },
     'gatsby-plugin-react-helmet',
-    'gatsby-plugin-styled-components'
+    'gatsby-plugin-styled-component',
+    'gatsby-plugin-remove-trailing-slashes'
   ],
 }

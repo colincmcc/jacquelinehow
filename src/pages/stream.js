@@ -19,7 +19,7 @@ export default ({ location }) => {
   console.log(location); // inspect location for yourself
 
   const {stream} = queryString.parse(location.search)
-  const iframeSource = `https://pus4-broadcast.officeapps.live.com/m/Broadcast.aspx?${stream}`
+  const iframeSource = `https://pus4-broadcast.officeapps.live.com/m/Broadcast.aspx?Fi=${stream}`
   return (
     <iframe
     frameBorder="0"
