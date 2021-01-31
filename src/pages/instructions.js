@@ -32,7 +32,7 @@ export default () => (
       <br/><br/>
       <form name="birthday" method="POST" data-netlify="true">
       <p>
-        <label>Your Name: <input type="text" name="name" /></label>
+        <label>Your Name: <input type="text" name="author" /></label>
       </p>
       <p>
         <label>Message: <textarea name="message"></textarea></label>

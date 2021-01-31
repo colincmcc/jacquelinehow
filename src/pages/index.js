@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import {Link, graphql} from 'gatsby'
 import Helmet from 'react-helmet'
 import {
@@ -12,10 +12,28 @@ import {
 import Body from '../components/Body'
 import Cards from '../components/Cards'
 import Layout from '../components/Layout'
+import axios from 'axios'
 
 Card.a = Card
+const NETLIFY_FUNC =
+  'jacqueline.how/.netlify/functions/fetchWishes'
 
-export default ({ data: { allMarkdownRemark: { edges } } }) => (
+export default ({ data: { allMarkdownRemark: { edges } } }) => {
+  const [wishes, setWishes] = useState([])
+
+  useEffect(() => {
+    console.log(wishes)
+    const fetchWishes = async () => {
+      const response = await axios.get(NETLIFY_FUNC);
+      if(response && response.data){
+        setWishes(response.data)
+      }
+      console.log(response)
+    }
+    fetchWishes();
+  }, [setWishes])
+
+  return (
   <Layout>
   <Box.main align="center">
     <Helmet title={`Happy birthday, Jacqueline!`} />
@@ -27,18 +45,18 @@ export default ({ data: { allMarkdownRemark: { edges } } }) => (
       Leave a Card
     </LargeButton>
     <Cards align="left">
-      {edges.map(({ node: { excerpt, frontmatter: { author } } }) => (
+      {wishes && wishes.map(({ author, message }) => (
         <Card p={4} bg="white"  key={author}>
           <Heading.h3 f={5} mb={1} color="primary">
             <Link to={`/${author}`}>{author}</Link>
           </Heading.h3>
-          <Body f={1} dangerouslySetInnerHTML={{ __html: excerpt }} />
+          <Body f={1} dangerouslySetInnerHTML={{ __html: message }} />
         </Card>
       ))}
     </Cards>
   </Box.main>
   </Layout>
-)
+)}
 
 export const pageQuery = graphql`
   query IndexQuery {
