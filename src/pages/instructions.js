@@ -14,7 +14,26 @@ import Cards from '../components/Cards'
 import Layout from '../components/Layout'
 Card.a = Card
 
-export default () => (
+function encode(data) {
+  return Object.keys(data)
+      .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
+      .join("&")
+}
+
+export default () => {
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    fetch("/", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: encode({
+        "form-name": event.target.getAttribute("name"),
+        ...name
+      })
+    }).then(() => navigate("/")).catch(error => alert(error))
+  }
+
+  return (
   <Layout>
   <Container maxWidth={36} p={3}>
     <Helmet title={`Happy birthday, Jacqueline!`} />
@@ -30,7 +49,7 @@ export default () => (
       January 30 is
       Jacqueline’s birthday. I’ve created a special website for her! If you’d like to write her a birthday card, keep reading.
       <br/><br/>
-      <form name="birthday" method="POST" data-netlify="true">
+      <form name="birthday" method="post" data-netlify="true" onSubmit={handleSubmit}>
       <p>
         <label>Your Name: <input type="text" name="author" /></label>
       </p>
@@ -45,4 +64,4 @@ export default () => (
     </Card.a>
   </Container>
   </Layout>
-)
+)}
