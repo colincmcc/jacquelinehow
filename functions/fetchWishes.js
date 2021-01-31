@@ -23,6 +23,15 @@ exports.handler = function(event, context, callback) {
 
         res.on('data', data => {
             body += data;
+            console.log(data)
+            callback(null, {
+                statusCode: 200,
+                headers: {
+                    "Access-Control-Allow-Origin" : "*",
+                    'Content-Type': 'application/json'
+                },
+                body: data
+            })
         });
 
         res.on('end', function () {
