@@ -16,7 +16,7 @@ import axios from 'axios'
 
 Card.a = Card
 const NETLIFY_FUNC =
-  'jacqueline.how/.netlify/functions/fetchWishes'
+  '.netlify/functions/fetchWishes'
 
 export default ({ data: { allMarkdownRemark: { edges } } }) => {
   const [wishes, setWishes] = useState([])
