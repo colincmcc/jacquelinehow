@@ -25,7 +25,7 @@ export default ({ data: { allMarkdownRemark: { edges } } }) => {
     console.log(wishes)
     const fetchWishes = async () => {
       const response = await axios.get(NETLIFY_FUNC);
-      if(response && response.data){
+      if(response && response.data && Array.isArray(response.data)){
         setWishes(response.data)
       }
       console.log(response)
@@ -45,12 +45,12 @@ export default ({ data: { allMarkdownRemark: { edges } } }) => {
       Leave a Card
     </LargeButton>
     <Cards align="left">
-      {wishes && wishes.map(({ author, message }) => (
-        <Card p={4} bg="white"  key={author}>
+      {console.log(wishes) && wishes.map((wish) => (
+        <Card p={4} bg="white"  key={wish?.author}>
           <Heading.h3 f={5} mb={1} color="primary">
-            <Link to={`/${author}`}>{author}</Link>
+            <Link to={`/${wish?.author}`}>{wish?.author}</Link>
           </Heading.h3>
-          <Body f={1} dangerouslySetInnerHTML={{ __html: message }} />
+          <Body f={1} dangerouslySetInnerHTML={{ __html: wish?.message }} />
         </Card>
       ))}
     </Cards>
