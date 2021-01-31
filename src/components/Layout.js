@@ -3,7 +3,7 @@ import Helmet from 'react-helmet'
 import ThemeProvider from '../theme'
 import { Text, mediaQueries } from '@hackclub/design-system'
 import Link from 'gatsby-link'
-import Bio from '../components/Bio'
+import Bio from './Bio'
 
 const Future = Text.withComponent(Link).extend`
   text-align: center;

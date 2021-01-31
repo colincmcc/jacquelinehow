@@ -25,10 +25,9 @@ export default ({ data: { allMarkdownRemark: { edges } } }) => {
     console.log(wishes)
     const fetchWishes = async () => {
       const response = await axios.get(NETLIFY_FUNC);
-      if(response && response.data && Array.isArray(response.data)){
-        setWishes(response.data)
+      if(response && Array.isArray(response)){
+        setWishes(response)
       }
-      console.log(response)
     }
     fetchWishes();
   }, [setWishes])
