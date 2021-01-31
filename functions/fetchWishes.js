@@ -1,50 +1,21 @@
-const https = require('https');
+const axios = require('axios');
 
 exports.handler = function(event, context, callback) {
     var token = process.env.netlify_access_token;
 
-
-    var options = {
-        hostname: 'api.netlify.com',
-        port: 443,
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    };
-
+    const baseUrl = "https://api.netlify.com"
     var queryToken = `access_token=${token}`;
-    var opts1 = Object.assign({}, options, { path: `/api/v1/forms/birthday/submissions?${queryToken}`});
 
-    var req = https.request(opts1, function(res) {
+    axios.get(`${baseUrl}/api/v1/sites/${process.env.site_id}/forms?${queryToken}`)
+    .then(sitesResult => {
+        const form = sitesResult?.data?.filter(x => x.name == "birthday")
 
-        res.setEncoding('utf8');
-        var body = "";
-
-        res.on('data', data => {
-            body += data;
-            console.log(data)
+        axios.get(`${baseUrl}/api/v1/forms/${form.id}/submissions?${queryToken}`).then(formsResult => {
             callback(null, {
                 statusCode: 200,
-                headers: {
-                    "Access-Control-Allow-Origin" : "*",
-                    'Content-Type': 'application/json'
-                },
-                body: data
-            })
-        });
-
-        res.on('end', function () {
-            callback(null, {
-                statusCode: 200,
-                headers: {
-                    "Access-Control-Allow-Origin" : "*",
-                    'Content-Type': 'application/json'
-                },
-                body: body
-            })
-        });
-    });
-
-    req.end();
+                body: JSON.stringify(formsResult.data)
+              });
+        }).catch(ex => callback(ex))
+    })
+    .catch(ex => callback(ex));
 }
