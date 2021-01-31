@@ -1,8 +1,8 @@
 import React from 'react'
-import { injectGlobal, ThemeProvider as Root } from 'styled-components'
+import { createGlobalStyle, ThemeProvider as Root } from 'styled-components'
 import theme from './config'
 
-injectGlobal`
+const GlobalStyles = createGlobalStyle`
   body {
     font-family: ${theme.font};
     background-color: #FF16D1;
@@ -37,7 +37,10 @@ injectGlobal`
 `
 
 const ThemeProvider = props => (
+  <>
+  <GlobalStyles />
   <Root theme={theme} children={<div>{props.children}</div>} />
+  </>
 )
 
 export default ThemeProvider

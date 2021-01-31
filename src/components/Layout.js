@@ -31,7 +31,7 @@ const description =
   ''
 const img = '/card.png'
 
-const Template = ({ children, ...props }) => (
+const Layout = ({ children, ...props }) => (
   <ThemeProvider {...props}>
     <Helmet
       meta={[
@@ -55,8 +55,8 @@ const Template = ({ children, ...props }) => (
       🎂🎈🎁🌟
     </Future>
     <Bio />
-    {children()}
+    {children}
     <Footer />
   </ThemeProvider>
 )
-export default Template
+export default Layout

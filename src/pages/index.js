@@ -1,5 +1,5 @@
 import React from 'react'
-import Link from 'gatsby-link'
+import {Link, graphql} from 'gatsby'
 import Helmet from 'react-helmet'
 import {
   Container,
@@ -11,10 +11,12 @@ import {
 } from '@hackclub/design-system'
 import Body from '../components/Body'
 import Cards from '../components/Cards'
+import Layout from '../components/Layout'
 
-Card.a = Card.withComponent('article')
+Card.a = Card
 
 export default ({ data: { allMarkdownRemark: { edges } } }) => (
+  <Layout>
   <Box.main align="center">
     <Helmet title={`Happy birthday, Jacqueline!`} />
     <LargeButton
@@ -26,15 +28,16 @@ export default ({ data: { allMarkdownRemark: { edges } } }) => (
     </LargeButton>
     <Cards align="left">
       {edges.map(({ node: { excerpt, frontmatter: { author } } }) => (
-        <Card.a p={4} bg="white" key={author}>
+        <Card p={4} bg="white"  key={author}>
           <Heading.h3 f={5} mb={1} color="primary">
             <Link to={`/${author}`}>{author}</Link>
           </Heading.h3>
           <Body f={1} dangerouslySetInnerHTML={{ __html: excerpt }} />
-        </Card.a>
+        </Card>
       ))}
     </Cards>
   </Box.main>
+  </Layout>
 )
 
 export const pageQuery = graphql`

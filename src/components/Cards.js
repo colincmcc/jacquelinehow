@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box } from '@hackclub/design-system'
 
-const Cards = Box.withComponent('main').extend`
+const Cards = Box.main.extend`
   max-width: 48rem;
   margin: 1rem auto 4rem;
   @media screen and (max-width:32em) {
